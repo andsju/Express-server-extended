@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-server",
+  "version": "1.0.0",
+  "description": "Express server in node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andsju/Express-server.git"
+  },
+  "author": "andsju",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andsju/Express-server/issues"
+  },
+  "homepage": "https://github.com/andsju/Express-server#readme"
+}
