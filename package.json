@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andsju/Express-server.git"
+    "url": "git+https://github.com/andsju/Express-server-extended.git"
   },
   "author": "andsju",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/andsju/Express-server/issues"
+    "url": "https://github.com/andsju/Express-server-extended/issues"
   },
-  "homepage": "https://github.com/andsju/Express-server#readme",
+  "homepage": "https://github.com/andsju/Express-server-extended#readme",
   "dependencies": {
     "express": "^4.16.4",
     "fs": "0.0.1-security",
