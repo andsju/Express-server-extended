@@ -5,11 +5,13 @@ var fs = require('fs');
 var path = require('path');
 var morgan = require('morgan');
 var winston = require('winston');
+var session = require('express-session');
 
 // application log functions and settings
-const logger = require('./config/logger').logger;
-const logDirectory = require('./config/logger').logDirectory;
-const logAccessStream = require('./config/logger').logAccessStream;
+const logger = require('./configs/logger').logger;
+const logDirectory = require('./configs/logger').logDirectory;
+const logAccessStream = require('./configs/logger').logAccessStream;
+const config = require('./configs/credentials');
 
 var app = express();
 
@@ -29,6 +31,20 @@ app.use(morgan('dev', {
   }
 }));
 
+// sessions
+app.use(session({
+  secret: config.session.sessionSecret,
+  name: config.session.sessionName,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}));
+
+// check sessions
+app.get('*', function(req, res, next) {
+  console.log(req.session);
+  next();
+})
 
 /* --------------------------------------------------
  routes

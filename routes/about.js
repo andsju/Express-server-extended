@@ -3,7 +3,7 @@
 const path = require('path');
 var router = require("express").Router();
 
-const logger = require('../config/logger').logger;
+const logger = require('../configs/logger').logger;
 
 // logger.info(path.basename(module.filename));
 
