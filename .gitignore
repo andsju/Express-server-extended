@@ -1,3 +1,6 @@
 # ignore directories
 logs
 node_modules
+
+# ignore files
+configs/production.json
