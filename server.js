@@ -6,6 +6,9 @@ var path = require('path');
 var morgan = require('morgan');
 var winston = require('winston');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var csrf = require('csurf');
+var bodyParser = require('body-parser');
 
 // application log functions and settings
 const logger = require('./configs/logger').logger;
@@ -14,6 +17,7 @@ const logAccessStream = require('./configs/logger').logAccessStream;
 const config = require('./configs/credentials');
 
 var app = express();
+app.use(cookieParser());
 
 /* --------------------------------------------------
  express middleware
@@ -37,14 +41,44 @@ app.use(session({
   name: config.session.sessionName,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: {
+    maxAge: 60000
+  }
 }));
 
 // check sessions
-app.get('*', function(req, res, next) {
-  console.log(req.session);
+app.get('*', function (req, res, next) {
+  if (req.session.views) {
+    req.session.views++;
+  } else {
+    req.session.views = 1;
+  }
+  // console.log("session views: ", req.session.views);
   next();
 })
+
+// handle forms
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+// cookie
+app.use(function (req, res, next) {
+  var cookie = req.cookies.remember;
+  if (cookie === undefined) {
+    res.cookie('remember', '1', {
+      expires: new Date(Date.now() + 900000),
+      httpOnly: true
+    });
+  }
+  next();
+});
+
+// cross-site request forgery protection
+app.use(require("csurf")());
+app.use(function(req, res, next) {
+    res.locals._csrfToken = req.csrfToken();
+    next();
+});
 
 /* --------------------------------------------------
  routes
